@@ -30,7 +30,7 @@ passport.use(
           console.log("you exist");
           done(null, existingUser);
         } else {
-          new User({ userId: profile.id })
+          new User({ googleId: profile.id })
             .save()
             .then((user) => done(null, user));
         }

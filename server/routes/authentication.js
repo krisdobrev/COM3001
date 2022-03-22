@@ -10,6 +10,15 @@ module.exports = (app) => {
 
   app.get("/auth/google/callback", passport.authenticate("google"));
 
+  app.get("/api/current_user", (req, res) => {
+    res.send(req.user);
+  });
+
+  app.get("/api/logout", (req, res) => {
+    req.logout();
+    res.send(req.user); //delete
+  });
+
   // app.get("/auth/wechat", passport.authenticate("wechat", scope));
 
   // app.get("/auth/wechat/callback", passport.authenticate("wechat"));

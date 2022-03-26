@@ -16,10 +16,6 @@ module.exports = (app) => {
 
   app.get("/api/logout", (req, res) => {
     req.logout();
-    res.send(req.user); //delete
+    res.redirect("/");
   });
-
-  // app.get("/auth/wechat", passport.authenticate("wechat", scope));
-
-  // app.get("/auth/wechat/callback", passport.authenticate("wechat"));
 };

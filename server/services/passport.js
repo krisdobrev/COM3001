@@ -1,6 +1,6 @@
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
-const WeChatStrategy = require("passport-wechat").Strategy;
+const CustomStrategy = require("passport-custom").Strategy;
 const mongoose = require("mongoose");
 const keys = require("../config/keys");
 
@@ -30,7 +30,7 @@ passport.use(
           console.log("you exist");
           done(null, existingUser);
         } else {
-          new User({ googleId: profile.id })
+          new User({ googleId: profile.id, email: profile.emails[0].value })
             .save()
             .then((user) => done(null, user));
         }
@@ -38,18 +38,3 @@ passport.use(
     }
   )
 );
-
-// passport.use(
-//   new WeChatStrategy(
-//     {
-//       appID: { APPID },
-//       appSecret: { APPSECRET },
-//       callbackURL: "/auth/wechat/callback",
-//     },
-//     function (accessToken, refreshToken, profile, done) {
-//       console.log("access token", accessToken);
-//       console.log("refresh token", refreshToken);
-//       console.log("profile", profile);
-//     }
-//   )
-// );

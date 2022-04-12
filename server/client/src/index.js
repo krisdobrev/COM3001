@@ -1,18 +1,26 @@
-import "materialize-css/dist/css/materialize.min.css";
+//import "materialize-css/dist/css/materialize.min.css";
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import reduxThunk from "redux-thunk";
+import { composeWithDevTools } from "redux-devtools-extension";
+import { ChakraProvider } from "@chakra-ui/react";
 
 import App from "./components/App";
 import reducers from "./reducers";
 
-const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
+const store = createStore(
+  reducers,
+  { auth: { authenticated: localStorage.getItem("token") } },
+  composeWithDevTools(applyMiddleware(reduxThunk))
+);
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <ChakraProvider resetCSS={true}>
+      <App />
+    </ChakraProvider>
   </Provider>,
   document.querySelector("#root")
 );

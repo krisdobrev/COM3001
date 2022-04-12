@@ -17,7 +17,7 @@ exports.signup = async (req, res, next) => {
     const existingUser = await User.findOne({ email: email });
 
     if (existingUser) {
-      return res.status(422).send({ error: "Email in use" });
+      return res.status(422).send({ error: "Email is already in use." });
     } else {
       const user = await new User({
         email: email,

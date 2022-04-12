@@ -6,6 +6,7 @@ const keys = require("./config/keys");
 const http = require("http"); // new
 const bodyParser = require("body-parser"); // new
 const morgan = require("morgan"); // new
+//const cors = require("cors"); // new
 
 require("./models/User");
 require("./services/passport");
@@ -15,6 +16,7 @@ mongoose.connect(keys.mongoURI).catch((err) => console.log(err));
 const app = express();
 
 app.use(morgan("combined")); // new
+//app.use(cors); // new
 app.use(bodyParser.json({ type: "*/*" })); // new
 app.use(
   cookieSession({

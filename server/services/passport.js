@@ -14,20 +14,6 @@ const jwtOptions = {
   secretOrKey: keys.cookieKey,
 };
 
-// const jwtLogin = new JwtStrategy(jwtOptions, async (payload, done) => {
-//   //
-//   try {
-//     const user = await User.findById(payload.sub);
-//     if (!user) {
-//       done(null, false);
-//     }
-
-//     done(null, false);
-//   } catch (err) {
-//     return done(err, false);
-//   }
-// });
-
 const jwtLogin = new JwtStrategy(jwtOptions, function (payload, done) {
   User.findById(payload.sub, function (err, user) {
     if (err) {
@@ -95,7 +81,6 @@ passport.use(
       const existingUser = await User.findOne({ googleId: profile.id });
 
       if (existingUser) {
-        console.log("you exist");
         done(null, existingUser);
       } else {
         const user = await new User({

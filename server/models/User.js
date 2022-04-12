@@ -13,14 +13,10 @@ const userSchema = new Schema({
     lowercase: true,
     required: true,
   },
-  isAdmin: {
-    type: Boolean,
-    required: true,
-    default: false,
-  },
   password: {
     type: String,
     required: false,
+    default: "test",
   },
 });
 

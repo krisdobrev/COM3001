@@ -5,7 +5,7 @@ const orderSchema = new Schema({
   userId: {
     type: String,
   },
-  items: [
+  products: [
     {
       productId: {
         type: String,
@@ -17,6 +17,13 @@ const orderSchema = new Schema({
         default: 1,
       },
       price: Number,
+    },
+  ],
+  details: [
+    {
+      name: String,
+      address: String,
+      email: String,
     },
   ],
   total: {

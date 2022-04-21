@@ -71,13 +71,9 @@ class HeaderTest extends React.Component {
             <HStack spacing="10" justify="space-between">
               {isDesktop ? (
                 <Flex justify="space-between" flex="1">
-                  <ButtonGroup variant="link" spacing="8">
-                    {["Product", "Pricing", "Resources", "Support"].map(
-                      (item) => (
-                        <Button key={item}>{item}</Button>
-                      )
-                    )}
-                  </ButtonGroup>
+                  <Link to="/cart">
+                    <Button>Cart</Button>
+                  </Link>
                   <HStack spacing="3">{this.renderContent()}</HStack>
                 </Flex>
               ) : (

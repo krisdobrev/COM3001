@@ -1,7 +1,5 @@
 import axios from "axios";
-import { FETCH_USER, SIGNOUT_USER } from "./types";
-import { AUTH_USER } from "./types";
-import { AUTH_ERROR } from "./types";
+import { FETCH_USER, SIGNOUT_USER, AUTH_ERROR, AUTH_USER } from "./types";
 
 export const fetchUser = () => async (dispatch) => {
   //can refactor 88 video
@@ -16,11 +14,11 @@ export const signup =
     try {
       const res = await axios.post("/api/signup", { email, password });
 
-      dispatch({ type: AUTH_USER, payload: res.data.token });
+      dispatch({ type: AUTH_USER, payload: res.data });
       localStorage.setItem("token", res.data.token);
       callback();
     } catch (err) {
-      dispatch({ type: AUTH_ERROR, payload: "Email is already in use" });
+      dispatch({ type: AUTH_ERROR, payload: "Email is already in use!" });
     }
   };
 
@@ -30,7 +28,7 @@ export const signin =
     try {
       const res = await axios.post("/api/signin", { email, password });
 
-      dispatch({ type: AUTH_USER, payload: res.data.token });
+      dispatch({ type: AUTH_USER, payload: res.data });
       localStorage.setItem("token", res.data.token);
       callback();
     } catch (err) {

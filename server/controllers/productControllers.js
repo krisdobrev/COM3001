@@ -8,22 +8,54 @@ exports.post_product = (req, res, next) => {
 };
 
 // Retrieve all products
-exports.get_items = (req, res) => {
+exports.get_products = (req, res) => {
   Product.find().then((products) => res.json(products));
 };
 
 // Retrieve one product by ID
 
-exports.get_oneProduct = (req, res) => {
-  Product.findById.then((product) => res.json(product));
+exports.get_oneProduct = async (req, res) => {
+  const ObjectId = require("mongodb").ObjectId;
+  const id = ObjectId(req.params.id); // convert to ObjectId
+
+  const product = await Product.findById({ _id: id }).exec();
+
+  if (product) {
+    res.json(product);
+  } else {
+    res.status(404);
+    throw new Error("Product not found");
+  }
 };
 
 // Retrieve products of certain category
 
-exports.get_categoryOfProducts = (req, res) => {
-  Product.find({ category: req.params.category }).then(function (products) {
-    res.json(products);
-  });
+exports.get_categoryOfProducts = async (req, res) => {
+  const category = req.params.category;
+
+  const result = await Product.find(
+    {
+      category: { $regex: new RegExp(category), $options: "is" },
+      isActive: true,
+    },
+    { title: 1, description: 1, image: 1, category: 1, price: 1, _id: 0 }
+  );
+
+  res.status(200).json({ products: result });
+};
+
+//Retrieve products by title
+
+exports.get_productsByTitle = async (req, res) => {
+  const title = req.params.title;
+  try {
+    const result = await Product.find({
+      title: new RegExp(".*" + title + ".*"),
+    });
+    res.json({ searchResult: result, searchTitle: title });
+  } catch (err) {
+    res.json({ searchResult: "We could not find a product by that name." });
+  }
 };
 
 // Update product

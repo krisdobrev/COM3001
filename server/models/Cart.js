@@ -5,7 +5,7 @@ const cartSchema = new Schema({
   userId: {
     type: String,
   },
-  items: [
+  products: [
     {
       productId: {
         type: String,
@@ -17,11 +17,13 @@ const cartSchema = new Schema({
         default: 1,
       },
       price: Number,
+      image: String,
     },
   ],
   total: {
     type: Number,
     required: true,
+    default: 0,
   },
 });
 

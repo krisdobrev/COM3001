@@ -16,35 +16,37 @@ import {
   useColorModeValue,
   VisuallyHidden,
   ButtonGroup,
+  Alert,
+  AlertIcon,
+  AlertTitle,
 } from "@chakra-ui/react";
 import * as React from "react";
-import { useHistory, useLocation, Link } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import { fetchUser, signin } from "../../actions";
+import { signin } from "../../actions";
 import { PasswordField } from "./PasswordField";
 import { GoogleIcon } from "./ProviderIcons";
-import { Alert, AlertIcon, AlertTitle } from "@chakra-ui/react";
+// import { Alert, AlertIcon, AlertTitle } from "@chakra-ui/react";
 const icon = <GoogleIcon boxSize="5" />;
 
 const SigninTest = () => {
   const history = useHistory();
-  const location = useLocation();
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
-  const { authenticated, errorMessage } = auth;
+  const { errorMessage, isAuthenticated } = auth;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const helperFunction = async () => {
-    await dispatch(signin({ email, password }));
-
-    if (authenticated == false || authenticated == null) {
-    } else {
-      history.push("/");
-    }
+  const helperFunction = () => {
+    dispatch(signin({ email, password }));
   };
 
+  useEffect(() => {
+    if (isAuthenticated == true) {
+      history.push("/");
+    }
+  }, [auth.isAuthenticated]);
   return (
     <Container
       maxW="lg"

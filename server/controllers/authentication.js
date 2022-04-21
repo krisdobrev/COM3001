@@ -23,13 +23,26 @@ exports.signup = async (req, res, next) => {
         email: email,
         password: password,
       }).save();
-      res.json({ token: jwtUser(user) });
+      res.json({ token: jwtUser(user), _id: user._id });
     }
   } catch (err) {
     return next(err);
   }
 };
 
-exports.signin = (req, res, next) => {
-  res.send({ token: jwtUser(req) });
+exports.signin = async (req, res, next) => {
+  const email = req.body.email;
+  const password = req.body.password;
+
+  try {
+    const existingUser = await User.findOne({ email: email });
+
+    if (!existingUser) {
+      return res.status(422).send({ error: "Account does not exist. " });
+    } else {
+      res.json({ token: jwtUser(existingUser), _id: existingUser._id });
+    }
+  } catch (err) {
+    return next(err);
+  }
 };

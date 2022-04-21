@@ -18,6 +18,10 @@ const userSchema = new Schema({
     required: false,
     default: "test",
   },
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 userSchema.pre("save", async function (next) {

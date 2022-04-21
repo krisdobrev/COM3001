@@ -9,6 +9,9 @@ const morgan = require("morgan"); // new
 //const cors = require("cors"); // new
 
 require("./models/User");
+require("./models/Product");
+require("./models/Cart");
+require("./models/Order");
 require("./services/passport");
 
 mongoose.connect(keys.mongoURI).catch((err) => console.log(err));
@@ -28,6 +31,9 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 require("./routes/authentication")(app);
+require("./routes/products")(app);
+require("./routes/cart")(app);
+require("./routes/order")(app);
 
 const PORT = process.env.PORT || 5000; // new
 const server = http.createServer(app); // new

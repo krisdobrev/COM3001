@@ -18,7 +18,7 @@ import {
 import * as React from "react";
 import { GooglePayLogo, MasterCardLogo, PayPalLogo, VisaLogo } from "./Logos";
 
-export const PaymentInformation = () => {
+export const PaymentInformation = (props) => {
   const [value, setValue] = React.useState("1");
 
   return (
@@ -42,9 +42,15 @@ export const PaymentInformation = () => {
           }}
           spacing="6"
         >
-          <Radio value="1" defaultChecked spacing="3" flex="1">
+          <Radio
+            value="1"
+            defaultChecked
+            spacing="3"
+            flex="1"
+            onClick={() => props.setPaymentOption("stripe")}
+          >
             <Stack spacing="1.5">
-              <Box>
+              <Box onClick={() => props.setPaymentOption("stripe")}>
                 <Text
                   color={useColorModeValue("black", "white")}
                   fontWeight="medium"
@@ -55,7 +61,7 @@ export const PaymentInformation = () => {
                   Pay with credit card via Stripe
                 </Text>
               </Box>
-              <HStack>
+              <HStack onClick={() => props.setPaymentOption("stripe")}>
                 <Center
                   borderWidth="1px"
                   width="8"
@@ -89,8 +95,13 @@ export const PaymentInformation = () => {
               </HStack>
             </Stack>
           </Radio>
-          <Radio value="2" spacing="3" flex="1">
-            <Stack spacing="1.5">
+          <Radio
+            value="2"
+            spacing="3"
+            flex="1"
+            onClick={() => props.setPaymentOption("cash")}
+          >
+            <Stack spacing="1.5" onClick={() => props.setPaymentOption("cash")}>
               <Box>
                 <Text
                   color={useColorModeValue("black", "white")}
@@ -108,7 +119,7 @@ export const PaymentInformation = () => {
         </Stack>
       </RadioGroup>
 
-      <Stack spacing="8">
+      {/* <Stack spacing="8">
         <Stack direction="row" spacing="6">
           <FormControl id="card-number">
             <FormLabel color={useColorModeValue("gray.700", "gray.200")}>
@@ -162,7 +173,7 @@ export const PaymentInformation = () => {
             />
           </FormControl>
         </HStack>
-      </Stack>
+      </Stack> */}
     </Stack>
   );
 };

@@ -11,8 +11,6 @@ import {
 
 import { returnErrors } from "./errorActions";
 
-// Add actions for get one product and get producy by category
-
 export const getProducts = () => (dispatch) => {
   dispatch(setProductsLoading());
   axios
@@ -40,6 +38,15 @@ export const getOneProduct = (id) => async (dispatch) => {
 export const searchProduct = (title) => async (dispatch) => {
   try {
     const res = await axios.get(`/api/products/search/${title}`);
+    dispatch({ type: SEARCH_PRODUCTS, payload: res.data });
+  } catch (err) {
+    dispatch(returnErrors(err.response.data, err.response.status));
+  }
+};
+
+export const searchProductsCategory = (category) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/products/${category}`);
     dispatch({ type: SEARCH_PRODUCTS, payload: res.data });
   } catch (err) {
     dispatch(returnErrors(err.response.data, err.response.status));

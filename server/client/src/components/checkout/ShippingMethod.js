@@ -37,6 +37,29 @@ const ShippingMethod = (props) => {
         >
           <Radio
             value="1"
+            name="test1"
+            spacing="3"
+            flex="1"
+            onClick={() => {
+              props.setShippingCost(4.99);
+            }}
+          >
+            <Box
+              onClick={() => {
+                props.setShippingCost(4.99);
+              }}
+            >
+              <HStack color={useColorModeValue("black", "white")}>
+                <Text fontWeight="medium">Standard</Text>
+                <Text fontWeight="bold">£4.99</Text>
+              </HStack>
+              <Text color={useColorModeValue("gray.600", "gray.400")}>
+                Dispatched in 1 - 2 days
+              </Text>
+            </Box>
+          </Radio>
+          <Radio
+            value="2"
             name="test"
             spacing="3"
             flex="1"
@@ -56,29 +79,6 @@ const ShippingMethod = (props) => {
 
               <Text color={useColorModeValue("gray.600", "gray.400")}>
                 Dispatched in 24 hours
-              </Text>
-            </Box>
-          </Radio>
-          <Radio
-            value="2"
-            name="test1"
-            spacing="3"
-            flex="1"
-            onClick={() => {
-              props.setShippingCost(4.99);
-            }}
-          >
-            <Box
-              onClick={() => {
-                props.setShippingCost(4.99);
-              }}
-            >
-              <HStack color={useColorModeValue("black", "white")}>
-                <Text fontWeight="medium">Standard</Text>
-                <Text fontWeight="bold">£4.99</Text>
-              </HStack>
-              <Text color={useColorModeValue("gray.600", "gray.400")}>
-                Dispatched in 1 - 2 days
               </Text>
             </Box>
           </Radio>

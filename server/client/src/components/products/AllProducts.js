@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 import { getProducts } from "../../actions/productActions";
 import { getCart } from "../../actions/cartActions";
 
-const LandingTest = () => {
+const AllProducts = () => {
   const dispatch = useDispatch();
 
   const allProducts = useSelector((state) => state.product);
@@ -49,4 +49,4 @@ const LandingTest = () => {
   );
 };
 
-export default LandingTest;
+export default AllProducts;

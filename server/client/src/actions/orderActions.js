@@ -17,19 +17,28 @@ export const getOrders = (id) => (dispatch) => {
     );
 };
 
-export const checkout = (id, source) => (dispatch) => {
-  axios
-    .post(`/api/order/${id}`, { source })
-    .then((res) =>
-      dispatch({
-        type: CHECKOUT,
-        payload: res.data,
+export const checkout =
+  (fullName, address, zipCode, city, email, paymentOption, userId) =>
+  (dispatch) => {
+    axios
+      .post(`/api/order/${userId}`, {
+        fullName,
+        address,
+        zipCode,
+        city,
+        email,
+        paymentOption,
       })
-    )
-    .catch((err) =>
-      dispatch(returnErrors(err.response.data, err.response.status))
-    );
-};
+      .then((res) =>
+        dispatch({
+          type: CHECKOUT,
+          payload: res.data,
+        })
+      )
+      .catch((err) =>
+        dispatch(returnErrors(err.response.data, err.response.status))
+      );
+  };
 
 export const setOrdersLoading = () => {
   return {

@@ -5,35 +5,22 @@ const orderSchema = new Schema({
   userId: {
     type: String,
   },
-  products: [
-    {
-      productId: {
-        type: String,
-      },
-      title: String,
-      quantity: {
-        type: Number,
-        required: true,
-        default: 1,
-      },
-      price: Number,
-    },
-  ],
-  details: [
-    {
-      name: String,
-      address: String,
-      email: String,
-    },
-  ],
+  products: [],
+  details: {
+    name: String,
+    address: String,
+    email: String,
+  },
+
   total: {
     type: Number,
     required: true,
   },
-  date_added: {
+  date_ordered: {
     type: Date,
     default: Date.now,
   },
+  payment: String,
 });
 
 mongoose.model("order", orderSchema);

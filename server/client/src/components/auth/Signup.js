@@ -1,57 +1,161 @@
-import React, { Component } from "react";
-import { reduxForm, Field } from "redux-form";
-import { connect } from "react-redux";
-import { compose } from "redux";
-import * as actions from "../../actions";
-import GoogleButton from "react-google-button";
+import {
+  Box,
+  Button,
+  Checkbox,
+  CloseButton,
+  Container,
+  Divider,
+  FormControl,
+  FormLabel,
+  Heading,
+  HStack,
+  Input,
+  Stack,
+  Text,
+  useBreakpointValue,
+  useColorModeValue,
+  VisuallyHidden,
+  ButtonGroup,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+} from "@chakra-ui/react";
 
-class Signup extends Component {
-  onSubmit = () => {
-    this.onSubmit = (formProps) => {
-      this.props.signup(formProps, () => {
-        this.props.history.push("/");
-      });
-    };
+import * as React from "react";
+import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useState, useEffect } from "react";
+import { signup } from "../../actions";
+import { PasswordField } from "./PasswordField";
+import { GoogleIcon } from "./ProviderIcons";
+const icon = <GoogleIcon boxSize="5" />;
+
+const Signup = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
+  const { isAuthenticated, errorMessage } = auth;
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const helperFunction = () => {
+    dispatch(signup({ email, password }));
   };
 
-  render() {
-    const { handleSubmit } = this.props;
+  useEffect(() => {
+    if (isAuthenticated == true) {
+      history.push("/");
+    }
+  }, [auth.isAuthenticated]);
 
-    return (
-      <form onSubmit={handleSubmit(this.onSubmit)}>
-        <fieldset>
-          <label>Email</label>
-          <Field
-            name="email"
-            type="text"
-            component="input"
-            autoComplete="none"
-          />
-        </fieldset>
-        <fieldset>
-          <label>Password</label>
-          <Field
-            name="password"
-            type="password"
-            component="input"
-            autoComplete="none"
-          />
-        </fieldset>
-        <div>{this.props.errorMessage}</div>
-        <button>Sign up!</button>
-        <a target="_blank" href="/auth/google">
-          <GoogleButton />
-        </a>
-      </form>
-    );
-  }
-}
+  return (
+    <Container
+      maxW="lg"
+      py={{
+        base: "12",
+        md: "24",
+      }}
+      px={{
+        base: "0",
+        sm: "8",
+      }}
+    >
+      <Stack spacing="8">
+        <Stack spacing="6">
+          <Stack
+            spacing={{
+              base: "2",
+              md: "3",
+            }}
+            textAlign="center"
+          >
+            <Heading
+              size={useBreakpointValue({
+                base: "xs",
+                md: "sm",
+              })}
+            >
+              Create a new account
+            </Heading>
+            <HStack spacing="1" justify="center"></HStack>
+          </Stack>
+        </Stack>
+        <Box
+          py={{
+            base: "0",
+            sm: "8",
+          }}
+          px={{
+            base: "4",
+            sm: "10",
+          }}
+          bg={useBreakpointValue({
+            base: "transparent",
+            sm: "bg-surface",
+          })}
+          boxShadow={{
+            base: "none",
+            sm: useColorModeValue("md", "md-dark"),
+          }}
+          borderRadius={{
+            base: "none",
+            sm: "xl",
+          }}
+        >
+          <Stack spacing="6">
+            <Stack spacing="5">
+              <FormControl>
+                <FormLabel htmlFor="email">Email</FormLabel>
+                <Input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </FormControl>
+              <PasswordField setPassword={setPassword} password={password} />
+            </Stack>
+            <HStack justify="space-between">
+              <Checkbox defaultIsChecked>Remember me</Checkbox>
+            </HStack>
+            <Stack spacing="6">
+              <Button
+                variant="primary"
+                onClick={() => {
+                  helperFunction();
+                }}
+              >
+                Sign up
+              </Button>
+              {errorMessage && (
+                <Alert status="error">
+                  <AlertIcon />
+                  <AlertTitle mr={2}>{errorMessage}</AlertTitle>
+                  <CloseButton position="absolute" right="8px" top="8px" />
+                </Alert>
+              )}
+              <HStack>
+                <Divider />
+                <Text fontSize="sm" whiteSpace="nowrap" color="muted">
+                  or continue with
+                </Text>
+                <Divider />
+              </HStack>
 
-function mapStateToProps(state) {
-  return { errorMessage: state.auth.errorMessage };
-}
+              <a href="/auth/google">
+                <ButtonGroup variant="outline" spacing="4" width="full">
+                  <Button key="Google" isFullWidth>
+                    <VisuallyHidden>Sign in with Google</VisuallyHidden>
+                    {icon}
+                  </Button>
+                </ButtonGroup>
+              </a>
+            </Stack>
+          </Stack>
+        </Box>
+      </Stack>
+    </Container>
+  );
+};
 
-export default compose(
-  connect(mapStateToProps, actions),
-  reduxForm({ form: "signup" })
-)(Signup);
+export default Signup;

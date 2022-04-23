@@ -11,13 +11,29 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import { HiOutlineChat, HiOutlineMail, HiOutlinePhone } from "react-icons/hi";
-//import { products } from "./_data";
 import { ProductItem } from "./ProductItem";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { checkout } from "../../actions/orderActions";
+import { deleteCart } from "../../actions/cartActions";
 
 export const OrderSummary = (props) => {
+  const { fullName, address, zipCode, city, email, paymentOption } = props;
+  const dispatch = useDispatch();
+  const history = useHistory();
   const cartProducts = useSelector((state) => state.cart);
-  const { products } = cartProducts.cart;
+  const { products, userId } = cartProducts.cart;
+
+  const helperFunction = () => {
+    dispatch(
+      checkout(fullName, address, zipCode, city, email, paymentOption, userId)
+    );
+    if (paymentOption === "cash") {
+      history.push("/");
+      dispatch(deleteCart(userId)); // make a page with thank you for your order
+    }
+  };
+
   return (
     <Stack
       spacing={{
@@ -100,15 +116,21 @@ export const OrderSummary = (props) => {
               fontWeight="semibold"
               color={useColorModeValue("black", "white")}
             >
-              £{props.shippingCost + cartProducts.cart.total}
+              £{Number(props.shippingCost + cartProducts.cart.total).toFixed(2)}
             </Text>
           </Stack>
         </Stack>
       </Stack>
       <Stack spacing="8">
-        <Button colorScheme="blue" size="lg" py="7">
+        <Button
+          colorScheme="blue"
+          size="lg"
+          py="7"
+          onClick={() => helperFunction()}
+        >
           Place Order
         </Button>
+
         <Stack spacing="3">
           <Text fontSize="sm" color={useColorModeValue("gray.700", "gray.200")}>
             Have questions? or Need help to complete your order?

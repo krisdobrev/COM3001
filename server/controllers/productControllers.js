@@ -28,7 +28,7 @@ exports.get_oneProduct = async (req, res) => {
   }
 };
 
-// Retrieve products of certain category
+// Retrieve products by category
 
 exports.get_categoryOfProducts = async (req, res) => {
   const category = req.params.category;
@@ -41,7 +41,7 @@ exports.get_categoryOfProducts = async (req, res) => {
     { title: 1, description: 1, image: 1, category: 1, price: 1, _id: 0 }
   );
 
-  res.status(200).json({ products: result });
+  res.status(200).json({ searchResult: result, searchTitle: category });
 };
 
 //Retrieve products by title

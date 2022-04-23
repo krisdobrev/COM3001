@@ -24,6 +24,9 @@ export const getCart = (id) => (dispatch) => {
 };
 
 export const addToCart = (id, productId, quantity) => (dispatch) => {
+  if (id == undefined) {
+    id = "guest";
+  }
   axios
     .post(`/api/cart/${id}`, { productId, quantity })
     .then((res) =>
@@ -63,6 +66,15 @@ export const deleteFromCart = (userId, itemId) => (dispatch) => {
     .catch((err) =>
       dispatch(returnErrors(err.response.data, err.response.status))
     );
+};
+
+export const deleteCart = (userId) => (dispatch) => {
+  axios.delete(`/api/cart/${userId}`).then(() =>
+    dispatch({
+      type: DELETE_FROM_CART,
+      payload: { products: [] },
+    })
+  );
 };
 
 export const setCartLoading = () => {

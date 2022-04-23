@@ -11,13 +11,14 @@ import { getCart } from "../../actions/cartActions";
 
 import { connect } from "react-redux";
 
-class SearchTitle extends React.Component {
+class SearchCategory extends React.Component {
   renderContent() {
     switch (this.props.products.result.length) {
       case undefined || 0:
         return (
           <Box m="auto" w="auto">
-            Could not find a product with name: {this.props.products.title}
+            Could not find any items in the {this.props.products.title}{" "}
+            category.
           </Box>
         );
       default:
@@ -57,4 +58,4 @@ function mapStateToProps(state) {
   return { products: state.product.searchProducts };
 }
 
-export default connect(mapStateToProps)(SearchTitle);
+export default connect(mapStateToProps)(SearchCategory);

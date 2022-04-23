@@ -3,36 +3,44 @@ import {
   Flex,
   HStack,
   Stack,
+  Button,
   useColorModeValue as mode,
 } from "@chakra-ui/react";
 import * as React from "react";
 
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { searchProductsCategory } from "../../actions/productActions";
+
 const DesktopNavItem = (props) => {
+  const dispatch = useDispatch();
   const { isActive, label, href = "#", ...rest } = props;
   return (
-    <Flex
-      as="a"
-      href={href}
-      direction="column"
-      justify="center"
-      minH="10"
-      fontSize="sm"
-      fontWeight="medium"
-      position="relative"
-      aria-current={isActive ? "page" : undefined}
-      color={mode("gray.600", "gray.400")}
-      _activeLink={{
-        borderBottomWidth: "2px",
-        borderColor: "currentColor",
-        color: mode("blue.500", "blue.300"),
-      }}
-      _hover={{
-        color: mode("blue.500", "blue.300"),
-      }}
-      {...rest}
-    >
-      {label}
-    </Flex>
+    <Link to={href}>
+      <Flex
+        onClick={() => dispatch(searchProductsCategory(label))}
+        as="a"
+        direction="column"
+        justify="center"
+        minH="10"
+        fontSize="sm"
+        fontWeight="medium"
+        position="relative"
+        aria-current={isActive ? "page" : undefined}
+        color={mode("gray.600", "gray.400")}
+        _activeLink={{
+          borderBottomWidth: "2px",
+          borderColor: "currentColor",
+          color: mode("blue.500", "blue.300"),
+        }}
+        _hover={{
+          color: mode("blue.500", "blue.300"),
+        }}
+        {...rest}
+      >
+        {label}
+      </Flex>
+    </Link>
   );
 };
 
@@ -62,36 +70,36 @@ const NavItem = {
 };
 const menus = [
   {
-    label: "Ready To Cook",
-    href: "#",
+    label: "Ready To Eat",
+    href: "/products/ReadyToEat",
   },
   {
     label: "Noodles",
-    href: "#",
+    href: "/products/Noodles",
   },
   {
     label: "Snacks",
-    href: "#",
+    href: "/products/Snacks",
   },
   {
     label: "Sauces & Spices",
-    href: "#",
+    href: "/products/SaucesAndSpices",
   },
   {
     label: "Rice & Grains",
-    href: "#",
+    href: "/products/RiceAndGrains",
   },
   {
     label: "Drinks",
-    href: "#",
+    href: "/products/Drinks",
   },
   {
     label: "Fresh & Chilled Food",
-    href: "#",
+    href: "/products/FreshAndChilledFood",
   },
   {
     label: "Frozen Food",
-    href: "#",
+    href: "/products/FrozenFood",
   },
 ];
 

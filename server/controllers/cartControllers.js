@@ -9,7 +9,7 @@ exports.get_cart_products = async (req, res) => {
     if (cart && cart.products.length > 0) {
       res.send(cart);
     } else {
-      res.send(null);
+      res.send({ products: [] });
     }
   } catch (err) {
     console.log(err);
@@ -76,6 +76,15 @@ exports.delete_product = async (req, res) => {
     return res.status(201).send(cart);
   } catch (err) {
     console.log(err);
+    res.status(500).send("Something went wrong");
+  }
+};
+
+exports.delete_cart = (req, res) => {
+  const userId = req.params.userId;
+  try {
+    Cart.findOneAndDelete({ userId }).then(res.send("deleted"));
+  } catch (err) {
     res.status(500).send("Something went wrong");
   }
 };

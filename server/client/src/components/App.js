@@ -4,18 +4,15 @@ import { connect } from "react-redux";
 import * as actions from "../actions";
 
 import Header from "./header/Header";
-import Landing from "./Landing";
-import Signup from "../components/auth/Signup";
-import Signin from "../components/auth/Signin";
-import HeaderTest from "./HeaderTest";
-import SigninTest from "./auth/SigninTest";
-import SignupTest from "./auth/SignupTest";
-import LandingTest from "./products/LandingTest";
+import Signin from "./auth/Signin";
+import Signup from "./auth/Signup";
+import AllProducts from "./products/AllProducts";
 import Cart from "./cart/Cart";
 import Checkout from "./checkout/Checkout";
 import { Footer } from "./Footer";
 import { ProductDetail } from "./productDetail/ProductDetail";
 import SearchTitle from "./search/SearchTitle";
+import SearchCategory from "./searchCategory/SearchCategory";
 
 class App extends Component {
   componentDidMount() {
@@ -27,14 +24,22 @@ class App extends Component {
         <BrowserRouter>
           <div>
             <Header />
-            <Route exact path="/" component={LandingTest} />
-            <Route exact path="/signup" component={SignupTest} />
-            <Route exact path="/signin" component={SigninTest} />
+            <Route exact path="/" component={AllProducts} />
+            <Route exact path="/signup" component={Signup} />
+            <Route exact path="/signin" component={Signin} />
             <Route path="/cart" component={Cart} />
             <Route exact path="/checkout" component={Checkout} />
             <Route path="/product/:id" component={ProductDetail} />
-            <Route path="/products/search/:title" component={SearchTitle} />
-
+            <Route
+              exact
+              path="/products/search/:title"
+              component={SearchTitle}
+            />
+            <Route
+              exact
+              path="/products/:category"
+              component={SearchCategory}
+            />
             <Footer />
           </div>
         </BrowserRouter>

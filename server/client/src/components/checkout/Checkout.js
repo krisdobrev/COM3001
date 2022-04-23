@@ -19,7 +19,8 @@ const Checkout = () => {
   const [zipCode, setZipCode] = useState("");
   const [city, setCity] = useState("");
   const [email, setEmail] = useState("");
-  const [shippingCost, setShippingCost] = useState("");
+  const [shippingCost, setShippingCost] = useState("4.99");
+  const [paymentOption, setPaymentOption] = useState("stripe");
   return (
     <Box
       bgGradient={useColorModeValue(
@@ -73,7 +74,10 @@ const Checkout = () => {
               shippingCost={shippingCost}
               setShippingCost={setShippingCost}
             />
-            <PaymentInformation />
+            <PaymentInformation
+              paymentOption={paymentOption}
+              setPaymentOption={setPaymentOption}
+            />
           </Stack>
         </Box>
         <Box
@@ -99,7 +103,15 @@ const Checkout = () => {
             xl: "20",
           }}
         >
-          <OrderSummary shippingCost={shippingCost} />
+          <OrderSummary
+            fullName={fullName}
+            address={address}
+            zipCode={zipCode}
+            city={city}
+            email={email}
+            shippingCost={shippingCost}
+            paymentOption={paymentOption}
+          />
         </Box>
       </Flex>
     </Box>

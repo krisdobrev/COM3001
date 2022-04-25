@@ -45,7 +45,11 @@ export const CartItem = (props) => {
   const { title, quantity, price, image } = product;
 
   const onClickDelete = () => {
-    dispatch(deleteFromCart(authenticated._id, product.productId));
+    if (auth.google === false) {
+      dispatch(deleteFromCart(auth.id, product.productId));
+    } else {
+      dispatch(deleteFromCart(auth.google._id, product.productId));
+    }
   };
 
   const onChangeQuantity = (q) => {

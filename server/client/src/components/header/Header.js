@@ -23,8 +23,9 @@ import { signout } from "../../actions/index";
 
 class Header extends React.Component {
   renderContent() {
-    switch (this.props.auth.isAuthenticated) {
-      case false:
+    switch (true) {
+      case this.props.auth.authenticated === false &&
+        this.props.auth.google === false:
         return (
           <HStack spacing="2" flexShrink={0}>
             <NavAction.Desktop label="Wishlist" icon={RiHeartLine} />
@@ -63,7 +64,7 @@ class Header extends React.Component {
                 </CartCount>
               </Box>
             </Link>
-            <Link onClick={() => this.props.dispatch(signout())}>
+            <Link to="/" onClick={() => this.props.dispatch(signout())}>
               <NavAction.Desktop label="Logout" icon={AiOutlineUser} />
             </Link>
           </HStack>

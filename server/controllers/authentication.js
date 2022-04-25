@@ -23,7 +23,7 @@ exports.signup = async (req, res, next) => {
         email: email,
         password: password,
       }).save();
-      res.json({ token: jwtUser(user), _id: user._id });
+      res.json({ token: jwtUser(user), id: user._id });
     }
   } catch (err) {
     return next(err);
@@ -40,9 +40,13 @@ exports.signin = async (req, res, next) => {
     if (!existingUser) {
       return res.status(422).send({ error: "Account does not exist. " });
     } else {
-      res.json({ token: jwtUser(existingUser), _id: existingUser._id });
+      res.json({ token: jwtUser(existingUser), id: existingUser._id });
     }
   } catch (err) {
     return next(err);
   }
 };
+
+// exports.google_signin = async(req, res, next) => {
+
+// }

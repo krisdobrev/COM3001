@@ -6,7 +6,7 @@ import {
 } from "../actions/types";
 
 const initialState = {
-  cart: false,
+  cart: { products: [] },
   loading: false,
 };
 

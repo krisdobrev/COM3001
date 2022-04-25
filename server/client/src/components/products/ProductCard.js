@@ -67,7 +67,11 @@ export const ProductCard = (props) => {
           colorScheme="red"
           isFullWidth
           onClick={() => {
-            dispatch(addToCart(authenticated._id, product._id, 1)); // need to get user ID
+            if (auth.google === false) {
+              dispatch(addToCart(auth.id, product._id, 1));
+            } else {
+              dispatch(addToCart(auth.google._id, product._id, 1));
+            }
           }}
         >
           Add to cart

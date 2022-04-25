@@ -12,10 +12,20 @@ import {
 import * as React from "react";
 import { HiOutlineChat, HiOutlineMail, HiOutlinePhone } from "react-icons/hi";
 import { ProductItem } from "./ProductItem";
+import CheckoutForm from "../stripe/CheckoutForm";
+import "../stripe/Stripe.css";
+
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { checkout } from "../../actions/orderActions";
 import { deleteCart } from "../../actions/cartActions";
+
+import { useState, useEffect } from "react";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import axios from "axios";
+
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
 
 export const OrderSummary = (props) => {
   const { fullName, address, zipCode, city, email, paymentOption } = props;
@@ -24,13 +34,31 @@ export const OrderSummary = (props) => {
   const cartProducts = useSelector((state) => state.cart);
   const { products, userId } = cartProducts.cart;
 
-  const helperFunction = () => {
-    dispatch(
-      checkout(fullName, address, zipCode, city, email, paymentOption, userId)
-    );
+  const [clientSecret, setClientSecret] = useState("");
+  const appearance = {
+    theme: "stripe",
+  };
+  const options = {
+    clientSecret,
+    appearance,
+  };
+
+  const helperFunction = async () => {
     if (paymentOption === "cash") {
-      history.push("/");
-      dispatch(deleteCart(userId)); // make a page with thank you for your order
+      dispatch(
+        checkout(fullName, address, zipCode, city, email, paymentOption, userId)
+      );
+      history.push("/"); // success page
+      dispatch(deleteCart(userId));
+    } else {
+      dispatch(
+        checkout(fullName, address, zipCode, city, email, paymentOption, userId)
+      );
+      const res = await axios.post("/api/stripe/test", {
+        total: (cartProducts.cart.total + props.shippingCost) * 100,
+      });
+
+      setClientSecret(res.data.clientSecret);
     }
   };
 
@@ -130,6 +158,13 @@ export const OrderSummary = (props) => {
         >
           Place Order
         </Button>
+        <div className="Stripe">
+          {clientSecret && (
+            <Elements options={options} stripe={stripePromise}>
+              <CheckoutForm />
+            </Elements>
+          )}
+        </div>
 
         <Stack spacing="3">
           <Text fontSize="sm" color={useColorModeValue("gray.700", "gray.200")}>

@@ -7,6 +7,7 @@ import {
 
 const INITIAL_STATE = {
   authenticated: "",
+  google: "",
   isAuthenticated: false,
   errorMessage: "",
 };
@@ -25,15 +26,15 @@ export default function (state = INITIAL_STATE, action) {
     case SIGNOUT_USER:
       return {
         ...state,
-        authenticated: action.payload,
+        authenticated: false, //action.payload,
         isAuthenticated: false,
+        google: false,
         errorMessage: null,
       };
     case FETCH_USER:
       return {
         ...state,
-        authenticated: action.payload || false,
-        isAuthenticated: action.payload || false,
+        google: action.payload || false,
       };
     default:
       return state;

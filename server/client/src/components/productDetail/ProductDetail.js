@@ -154,14 +154,23 @@ export const ProductDetail = () => {
             colorScheme="blue"
             size="lg"
             onClick={() => {
-              dispatch(
-                addToCart(
-                  authenticated._id,
-                  currentProduct.currentProduct._id,
-                  quantity
-                )
-              );
-              console.log({ quantity });
+              if (auth.google === false) {
+                dispatch(
+                  addToCart(
+                    auth.id,
+                    currentProduct.currentProduct._id,
+                    quantity
+                  )
+                );
+              } else {
+                dispatch(
+                  addToCart(
+                    auth.google._id,
+                    currentProduct.currentProduct._id,
+                    quantity
+                  )
+                );
+              }
             }}
           >
             Add to cart

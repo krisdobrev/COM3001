@@ -24,9 +24,6 @@ export const getCart = (id) => (dispatch) => {
 };
 
 export const addToCart = (id, productId, quantity) => (dispatch) => {
-  if (id == undefined) {
-    id = "guest";
-  }
   axios
     .post(`/api/cart/${id}`, { productId, quantity })
     .then((res) =>

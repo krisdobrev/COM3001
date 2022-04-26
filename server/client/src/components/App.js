@@ -15,10 +15,17 @@ import SearchTitle from "./search/SearchTitle";
 import SearchCategory from "./searchCategory/SearchCategory";
 import PaymentCompleted from "./stripe/PaymentCompleted";
 import { CategoryDisplay } from "./category/CategoryDisplay";
+import AdminTable from "./admin/AdminTable";
+import { getCart } from "../actions/cartActions";
 
 class App extends Component {
   componentDidMount() {
     this.props.fetchUser();
+    // if (this.props.auth.google === false) {
+    //   getCart(this.props.auth.id);
+    // } else {
+    //   getCart(this.props.google.id);
+    // }
   }
 
   render() {
@@ -45,6 +52,7 @@ class App extends Component {
               path="/products/:category"
               component={SearchCategory}
             />
+            <Route path="/admin" component={AdminTable} />
             <Footer />
           </div>
         </BrowserRouter>

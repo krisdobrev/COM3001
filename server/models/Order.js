@@ -21,6 +21,10 @@ const orderSchema = new Schema({
     default: Date.now,
   },
   payment: String,
+  status: {
+    type: String,
+    default: "PAID",
+  },
 });
 
 mongoose.model("order", orderSchema);

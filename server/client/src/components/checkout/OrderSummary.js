@@ -144,7 +144,10 @@ export const OrderSummary = (props) => {
               fontWeight="semibold"
               color={useColorModeValue("black", "white")}
             >
-              £{Number(props.shippingCost + cartProducts.cart.total).toFixed(2)}
+              £
+              {(cartProducts.cart.total + Number(props.shippingCost)).toFixed(
+                2
+              )}
             </Text>
           </Stack>
         </Stack>

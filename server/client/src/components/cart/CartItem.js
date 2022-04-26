@@ -53,7 +53,11 @@ export const CartItem = (props) => {
   };
 
   const onChangeQuantity = (q) => {
-    dispatch(updateCart(authenticated._id, product.productId, q));
+    if (auth.google === false) {
+      dispatch(updateCart(auth.id, product.productId, q));
+    } else {
+      dispatch(updateCart(auth.google._id, product.productId, q));
+    }
   };
   return (
     <Flex

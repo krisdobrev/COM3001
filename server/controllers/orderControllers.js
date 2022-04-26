@@ -14,6 +14,9 @@ exports.get_orders = async (req, res) => {
     .then((orders) => res.json(orders));
 };
 
+exports.getAllOrders = async (req, res) => {
+  Order.find().then((orders) => res.json(orders));
+};
 exports.testCheckout = async (req, res) => {
   const { total } = req.body;
   const paymentIntent = await stripe.paymentIntents.create({

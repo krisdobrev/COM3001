@@ -16,3 +16,10 @@ export const CartCount = (props) => (
     {...props}
   />
 );
+
+/***************************************************************************************
+ *    Title: PRO Chakra UI
+ *    Date: 02/04/2022
+ *    Availability: https://pro.chakra-ui.com/components/e-commerce/store-navigation
+ *
+ ***************************************************************************************/

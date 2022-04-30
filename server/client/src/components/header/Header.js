@@ -31,7 +31,6 @@ class Header extends React.Component {
         this.props.auth.google === false:
         return (
           <HStack spacing="2" flexShrink={0}>
-            {/* <NavAction.Desktop label="Wishlist" icon={RiHeartLine} /> */}
             <Link to="/signin">
               <NavAction.Desktop label="Sign in" icon={AiOutlineUser} />
             </Link>
@@ -119,7 +118,6 @@ class Header extends React.Component {
             >
               <HStack spacing="3">
                 <Center w="8" h="8" as="button" type="button">
-                  {/* <VisuallyHidden>Toggle Menu</VisuallyHidden> */}
                   <Box as={MdMenu} fontSize="3xl" />
                 </Center>
                 <Logo h="3" />
@@ -130,7 +128,6 @@ class Header extends React.Component {
 
           <Flex flex="1" fontSize="sm" overflow="auto">
             <NavCategoryMenu.Mobile />
-            {/* <NavCategorySubmenu.Mobile /> */}
           </Flex>
           <MobileBottomNav />
         </Flex>
@@ -166,3 +163,10 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(Header);
+
+/***************************************************************************************
+ *    Title: PRO Chakra UI
+ *    Date: 02/04/2022
+ *    Availability: https://pro.chakra-ui.com/components/e-commerce/store-navigation
+ *
+ ***************************************************************************************/

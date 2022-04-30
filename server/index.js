@@ -36,13 +36,10 @@ require("./routes/cart")(app);
 require("./routes/order")(app);
 
 if (process.env.NODE_ENV === "production") {
-  const path = require("path");
-  app.use(express.static(path.resolve(__dirname, "../client/build")));
-
-  // Express will serve up the index.html file
-  // if it doesn't recognize the route
+  const root = require("path").join(__dirname, "client", "build");
+  app.use(express.static(root));
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/build", "index.html"));
+    res.sendFile("index.html", { root });
   });
 }
 

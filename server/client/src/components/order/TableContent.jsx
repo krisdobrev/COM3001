@@ -14,17 +14,19 @@ import { columns } from "./_data";
 import axios from "axios";
 
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import { getOrders } from "../../actions/orderActions";
+
 import CustomModal from "./CustomModal";
 
 export const TableContent = () => {
-  const [orders, setOrders] = useState([]);
+  const dispatch = useDispatch();
+  const userOrders = useSelector((state) => state.order.orders);
+  const userId = useSelector((state) => state.auth.id);
 
   useEffect(() => {
-    async function fetchData() {
-      const res = await axios.get("/api/orders");
-      setOrders(res.data);
-    }
-    fetchData();
+    dispatch(getOrders(userId));
   }, []);
 
   return (
@@ -40,7 +42,7 @@ export const TableContent = () => {
         </Tr>
       </Thead>
       <Tbody>
-        {orders.map((row, index) => (
+        {userOrders.map((row, index) => (
           <Tr key={index}>
             {columns.map((column, index) => {
               const cell = row[column.accessor];

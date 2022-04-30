@@ -9,6 +9,7 @@ const INITIAL_STATE = {
   authenticated: "",
   google: "",
   isAuthenticated: false,
+  isAdmin: false,
   errorMessage: "",
 };
 
@@ -17,8 +18,10 @@ export default function (state = INITIAL_STATE, action) {
     case AUTH_USER:
       return {
         ...state,
-        authenticated: action.payload,
+        authenticated: action.payload.token,
+        id: action.payload.id,
         isAuthenticated: true,
+        isAdmin: action.payload.isAdmin,
         errorMessage: null,
       };
     case AUTH_ERROR:
@@ -28,6 +31,7 @@ export default function (state = INITIAL_STATE, action) {
         ...state,
         authenticated: false, //action.payload,
         isAuthenticated: false,
+        id: false,
         google: false,
         errorMessage: null,
       };
@@ -35,6 +39,8 @@ export default function (state = INITIAL_STATE, action) {
       return {
         ...state,
         google: action.payload || false,
+        id: action.payload._id || false,
+        isAdmin: action.payload.isAdmin || false,
       };
     default:
       return state;

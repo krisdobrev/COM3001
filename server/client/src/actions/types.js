@@ -12,6 +12,7 @@ export const UPDATE_PRODUCT = "update_product";
 export const PRODUCTS_LOADING = "products_loading";
 export const CURRENT_PRODUCT = "current_product";
 export const SEARCH_PRODUCTS = "search_products";
+export const PRODUCT_ERROR = "product_error";
 //export const SEARCH_PRODUCTS_CATEGORY = "search_products_category";
 
 // Cart actions

@@ -4,12 +4,15 @@ import {
   Flex,
   HStack,
   useColorModeValue as mode,
-  VisuallyHidden,
 } from "@chakra-ui/react";
 import * as React from "react";
 import { AiOutlineUser } from "react-icons/ai";
 import { MdMenu } from "react-icons/md";
-import { RiHeartLine, RiShoppingCartLine } from "react-icons/ri";
+import {
+  RiShoppingCartLine,
+  RiListUnordered,
+  RiAdminFill,
+} from "react-icons/ri";
 import { Logo } from "./Logo";
 import { CartCount } from "./CartCount";
 import { MobileBottomNav } from "./MobileBottomNav";
@@ -28,7 +31,7 @@ class Header extends React.Component {
         this.props.auth.google === false:
         return (
           <HStack spacing="2" flexShrink={0}>
-            <NavAction.Desktop label="Wishlist" icon={RiHeartLine} />
+            {/* <NavAction.Desktop label="Wishlist" icon={RiHeartLine} /> */}
             <Link to="/signin">
               <NavAction.Desktop label="Sign in" icon={AiOutlineUser} />
             </Link>
@@ -50,20 +53,41 @@ class Header extends React.Component {
       default:
         return (
           <HStack spacing="5" flexShrink={0}>
-            <NavAction.Desktop label="Wishlist" icon={RiHeartLine} />
-            <Link to="/cart">
-              <Box position="relative">
-                <NavAction.Desktop label="Cart" icon={RiShoppingCartLine} />
-                <CartCount>
-                  {this.props.cart.cart == false
-                    ? 0
-                    : this.props.cart.cart.products.reduce(
-                        (acc, product) => acc + product.quantity,
-                        0
-                      )}
-                </CartCount>
-              </Box>
-            </Link>
+            {this.props.auth.isAdmin ? (
+              <HStack spacing="5">
+                <Link to="/admin/orders">
+                  {" "}
+                  <NavAction.Desktop label="Orders" icon={RiAdminFill} />{" "}
+                </Link>
+                <Link to="/admin/products">
+                  {" "}
+                  <NavAction.Desktop label="Products" icon={RiAdminFill} />{" "}
+                </Link>
+              </HStack>
+            ) : (
+              <Link to="/user/orders">
+                <NavAction.Desktop label="Orders" icon={RiListUnordered} />
+              </Link>
+            )}
+
+            {this.props.auth.isAdmin ? (
+              <div></div>
+            ) : (
+              <Link to="/cart">
+                <Box position="relative">
+                  <NavAction.Desktop label="Cart" icon={RiShoppingCartLine} />
+                  <CartCount>
+                    {this.props.cart.cart == false
+                      ? 0
+                      : this.props.cart.cart.products.reduce(
+                          (acc, product) => acc + product.quantity,
+                          0
+                        )}
+                  </CartCount>
+                </Box>
+              </Link>
+            )}
+
             <Link to="/" onClick={() => this.props.dispatch(signout())}>
               <NavAction.Desktop label="Logout" icon={AiOutlineUser} />
             </Link>

@@ -4,7 +4,6 @@ import {
   Heading,
   HStack,
   Icon,
-  Link,
   Stack,
   Text,
   useColorModeValue,
@@ -14,7 +13,6 @@ import { FiHeart } from "react-icons/fi";
 import { Gallery } from "./Gallery";
 import { PriceTag } from "./PriceTag";
 import { QuantityPicker } from "./QuantityPicker";
-import { images } from "./_data";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getOneProduct } from "../../actions/productActions";
@@ -29,10 +27,10 @@ export const ProductDetail = () => {
   const [quantity, setQuantity] = useState(1);
 
   const currentProduct = useSelector((state) => state.product);
-  const { product } = currentProduct.currentProduct;
+  // const { product } = currentProduct.currentProduct;
 
   const auth = useSelector((state) => state.auth);
-  const { authenticated } = auth;
+  //const { authenticated } = auth;
 
   useEffect(() => {
     dispatch(getOneProduct(id));

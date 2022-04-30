@@ -1,4 +1,4 @@
-import pagefooter from "./style/FooterStyle.css";
+import pagefooter from "../style/FooterStyle.css";
 
 import {
   Button,

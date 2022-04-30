@@ -48,7 +48,7 @@ export const OrderSummary = (props) => {
       dispatch(
         checkout(fullName, address, zipCode, city, email, paymentOption, userId)
       );
-      history.push("/"); // success page
+      history.push("/order/success"); // success page
       dispatch(deleteCart(userId));
     } else {
       dispatch(

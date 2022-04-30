@@ -6,6 +6,7 @@ import {
   PRODUCTS_LOADING,
   CURRENT_PRODUCT,
   SEARCH_PRODUCTS,
+  PRODUCT_ERROR,
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -32,7 +33,11 @@ export default function (state = INITIAL_STATE, action) {
         loading: false,
       };
     case ADD_PRODUCT:
-      return { ...state, products: [action.payload, ...state.products] };
+      return {
+        ...state,
+        products: [action.payload, ...state.products],
+        created: true,
+      };
     case DELETE_PRODUCT:
       return {
         ...state,
@@ -41,18 +46,18 @@ export default function (state = INITIAL_STATE, action) {
         ),
       };
     case UPDATE_PRODUCT:
-      const { id, data } = action.payload;
+      //const { id, data } = action.payload;
       return {
         ...state,
-        products: state.products.map((product) => {
-          if (product._id === id) {
-            product = data;
-          }
-        }),
+        created: true,
+        products: [...state.products],
       };
     case PRODUCTS_LOADING:
-      return { ...state, loading: true };
+      return { ...state, error: false, created: false };
     default:
       return state;
+
+    case PRODUCT_ERROR:
+      return { ...state, error: true };
   }
 }

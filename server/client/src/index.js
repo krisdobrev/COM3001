@@ -17,6 +17,7 @@ const store = createStore(
       authenticated: localStorage.getItem("token") || false,
       id: localStorage.getItem("id") || false,
       google: localStorage.getItem("google") || false,
+      isAdmin: JSON.parse(localStorage.getItem("isAdmin")) || false,
     },
   },
   composeWithDevTools(applyMiddleware(reduxThunk))

@@ -19,17 +19,6 @@ export const columns = [
     accessor: "payment",
   },
   {
-    Header: "Status",
-    accessor: "status",
-    Cell: function StatusCell(data) {
-      return (
-        <Badge fontSize="xs" colorScheme={badgeEnum[data]}>
-          {data}
-        </Badge>
-      );
-    },
-  },
-  {
     Header: "Total",
     accessor: "total",
     Cell: function MemberCell(data) {

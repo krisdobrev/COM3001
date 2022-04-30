@@ -68,6 +68,8 @@ export const CategoryDisplay = () => {
             }}
           >
             <Link
+              as={RLink}
+              to="/all/products"
               fontWeight="semibold"
               color={useColorModeValue("blue.500", "blue.300")}
             >

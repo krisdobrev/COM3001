@@ -16,14 +16,19 @@ const AllProducts = () => {
   const { products } = allProducts;
 
   const auth = useSelector((state) => state.auth);
-  const { authenticated } = auth;
+  const { authenticated, google, id } = auth;
 
   useEffect(() => {
     dispatch(getProducts());
-    if (authenticated) {
-      dispatch(getCart(authenticated._id));
+
+    if (authenticated === false && google === false) {
+      dispatch(getCart(false));
+    } else if (google === false) {
+      dispatch(getCart(id));
+    } else if (authenticated === false) {
+      dispatch(getCart(google._id));
     }
-  }, [dispatch]);
+  }, [dispatch, auth]);
 
   return (
     <Box

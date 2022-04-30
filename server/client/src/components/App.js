@@ -9,23 +9,23 @@ import Signup from "./auth/Signup";
 import AllProducts from "./products/AllProducts";
 import Cart from "./cart/Cart";
 import Checkout from "./checkout/Checkout";
-import { Footer } from "./Footer";
+import { Footer } from "./footer/Footer";
 import { ProductDetail } from "./productDetail/ProductDetail";
 import SearchTitle from "./search/SearchTitle";
 import SearchCategory from "./searchCategory/SearchCategory";
+import Orders from "./order/Orders";
 import PaymentCompleted from "./stripe/PaymentCompleted";
+import Success from "./checkout/Success";
 import { CategoryDisplay } from "./category/CategoryDisplay";
+import { Carousel } from "./carousel/Carousel";
 import AdminTable from "./admin/AdminTable";
-import { getCart } from "../actions/cartActions";
+import { AdminProducts } from "./admin/AdminProducts/AdminProducts";
+import { CreateProduct } from "./admin/AdminCreateProduct/CreateProduct";
+import { EditProduct } from "./admin/AdminEditProduct/EditProduct";
 
 class App extends Component {
   componentDidMount() {
     this.props.fetchUser();
-    // if (this.props.auth.google === false) {
-    //   getCart(this.props.auth.id);
-    // } else {
-    //   getCart(this.props.google.id);
-    // }
   }
 
   render() {
@@ -34,13 +34,18 @@ class App extends Component {
         <BrowserRouter>
           <div>
             <Header />
+            <Route exact path="/" component={Carousel} />
             <Route exact path="/" component={CategoryDisplay} />
-            <Route exact path="/" component={AllProducts} />
+
             <Route exact path="/signup" component={Signup} />
             <Route exact path="/signin" component={Signin} />
             <Route path="/cart" component={Cart} />
             <Route exact path="/checkout" component={Checkout} />
+            <Route exact path="/user/orders" component={Orders} />
             <Route path="/payment" component={PaymentCompleted} />
+            <Route exact path="/order/success" component={Success} />
+
+            <Route exact path="/all/products" component={AllProducts} />
             <Route path="/product/:id" component={ProductDetail} />
             <Route
               exact
@@ -52,7 +57,15 @@ class App extends Component {
               path="/products/:category"
               component={SearchCategory}
             />
-            <Route path="/admin" component={AdminTable} />
+
+            <Route path="/admin/orders" component={AdminTable} />
+            <Route path="/admin/products" component={AdminProducts} />
+            <Route
+              exact
+              path="/admin/product/new/create"
+              component={CreateProduct}
+            />
+            <Route exact path="/admin/product/:id" component={EditProduct} />
             <Footer />
           </div>
         </BrowserRouter>

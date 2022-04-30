@@ -7,6 +7,7 @@ import {
   PRODUCTS_LOADING,
   CURRENT_PRODUCT,
   SEARCH_PRODUCTS,
+  PRODUCT_ERROR,
 } from "./types";
 
 import { returnErrors } from "./errorActions";
@@ -61,8 +62,11 @@ export const addProduct = (PRODUCT) => (dispatch) => {
         payload: res.data,
       })
     )
-    .catch((err) =>
-      dispatch(returnErrors(err.response.data, err.response.status))
+    .catch(
+      (err) => dispatch(returnErrors(err.response.data, err.response.status)),
+      dispatch({
+        type: PRODUCT_ERROR,
+      })
     );
 };
 
@@ -86,11 +90,15 @@ export const updateProduct = (id, product) => (dispatch) => {
     .then((res) =>
       dispatch({
         type: UPDATE_PRODUCT,
-        payload: Promise.all([id, res.data]),
+        // payload: Promise.all([id, res.data]),
       })
     )
-    .catch((err) =>
-      dispatch(returnErrors(err.response.data, err.response.status))
+    .catch(
+      (err) =>
+        dispatch({
+          type: PRODUCT_ERROR,
+        })
+      //dispatch(returnErrors(err.response.data, err.response.status))
     );
 };
 

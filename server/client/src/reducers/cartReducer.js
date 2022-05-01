@@ -3,6 +3,7 @@ import {
   ADD_TO_CART,
   DELETE_FROM_CART,
   CART_LOADING,
+  CART_ERROR,
 } from "../actions/types";
 
 const initialState = {

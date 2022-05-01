@@ -38,7 +38,7 @@ exports.get_categoryOfProducts = async (req, res) => {
       category: { $regex: new RegExp(category), $options: "is" },
       isActive: true,
     },
-    { title: 1, description: 1, image: 1, category: 1, price: 1, _id: 0 }
+    { title: 1, description: 1, image: 1, category: 1, price: 1, _id: 1 }
   );
 
   res.status(200).json({ searchResult: result, searchTitle: category });

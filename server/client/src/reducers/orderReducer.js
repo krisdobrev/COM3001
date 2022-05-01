@@ -17,7 +17,7 @@ export default function (state = initialState, action) {
     case CHECKOUT:
       return {
         ...state,
-        orders: [action.payload, ...state.orders],
+        currentOrder: action.payload,
       };
 
     case ORDERS_LOADING:

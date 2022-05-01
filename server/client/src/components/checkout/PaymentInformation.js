@@ -99,9 +99,9 @@ export const PaymentInformation = (props) => {
             value="2"
             spacing="3"
             flex="1"
-            onClick={() => props.setPaymentOption("cash")}
+            onClick={() => props.setPaymentOption("Cash")}
           >
-            <Stack spacing="1.5" onClick={() => props.setPaymentOption("cash")}>
+            <Stack spacing="1.5" onClick={() => props.setPaymentOption("Cash")}>
               <Box>
                 <Text
                   color={useColorModeValue("black", "white")}

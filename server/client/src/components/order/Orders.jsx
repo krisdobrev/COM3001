@@ -19,7 +19,7 @@ const AdminTable = () => {
       >
         <Box overflowX="auto">
           <Heading size="lg" mb="6">
-            Orders
+            My Orders
           </Heading>
 
           <TableContent />

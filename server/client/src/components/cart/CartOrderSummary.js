@@ -55,7 +55,7 @@ export const CartOrderSummary = () => {
       </Stack>
 
       <Button
-        colorScheme="blue"
+        colorScheme="red"
         size="lg"
         fontSize="md"
         rightIcon={<FaArrowRight />}

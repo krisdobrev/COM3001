@@ -3,8 +3,9 @@ import * as React from "react";
 
 const badgeEnum = {
   PAID: "green",
-  REVIEWING: "orange",
+  PROCESSING: "orange",
   FAILED: "red",
+  Express: "red",
 };
 export const columns = [
   {
@@ -21,6 +22,17 @@ export const columns = [
   {
     Header: "Status",
     accessor: "status",
+    Cell: function StatusCell(data) {
+      return (
+        <Badge fontSize="xs" colorScheme={badgeEnum[data]}>
+          {data}
+        </Badge>
+      );
+    },
+  },
+  {
+    Header: "Shipping",
+    accessor: "shipping",
     Cell: function StatusCell(data) {
       return (
         <Badge fontSize="xs" colorScheme={badgeEnum[data]}>

@@ -26,6 +26,13 @@ export const signup =
     }
   };
 
+export const passwordValidation = () => (dispatch) => {
+  dispatch({
+    type: AUTH_ERROR,
+    payload: "Password must be at least 8 characters.",
+  });
+};
+
 export const signin =
   ({ email, password }, callback) =>
   async (dispatch) => {
@@ -46,6 +53,7 @@ export const signout = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("id");
   localStorage.removeItem("isAdmin");
+  localStorage.removeItem("order");
   axios.get("/api/logout");
   return {
     type: SIGNOUT_USER,

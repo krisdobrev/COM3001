@@ -8,6 +8,10 @@ import {
   Stack,
   Text,
   useColorModeValue,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  CloseButton,
 } from "@chakra-ui/react";
 import * as React from "react";
 import { HiOutlineChat, HiOutlineMail, HiOutlinePhone } from "react-icons/hi";
@@ -18,7 +22,7 @@ import "../stripe/Stripe.css";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { checkout } from "../../actions/orderActions";
-import { deleteCart } from "../../actions/cartActions";
+import { deleteCart, cartError } from "../../actions/cartActions";
 
 import { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
@@ -28,13 +32,23 @@ import axios from "axios";
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
 
 export const OrderSummary = (props) => {
-  const { fullName, address, zipCode, city, email, paymentOption } = props;
+  const {
+    fullName,
+    address,
+    zipCode,
+    city,
+    email,
+    paymentOption,
+    shippingCost,
+    shippingMethod,
+  } = props;
   const dispatch = useDispatch();
   const history = useHistory();
   const cartProducts = useSelector((state) => state.cart);
   const { products, userId } = cartProducts.cart;
 
   const [clientSecret, setClientSecret] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const appearance = {
     theme: "stripe",
   };
@@ -44,21 +58,47 @@ export const OrderSummary = (props) => {
   };
 
   const helperFunction = async () => {
-    if (paymentOption === "cash") {
-      dispatch(
-        checkout(fullName, address, zipCode, city, email, paymentOption, userId)
-      );
-      history.push("/order/success"); // success page
-      dispatch(deleteCart(userId));
-    } else {
-      dispatch(
-        checkout(fullName, address, zipCode, city, email, paymentOption, userId)
-      );
-      const res = await axios.post("/api/stripe/test", {
-        total: (cartProducts.cart.total + props.shippingCost) * 100,
-      });
+    if (fullName && address && zipCode && city && email) {
+      if (paymentOption === "Cash") {
+        dispatch(
+          checkout(
+            fullName,
+            address,
+            zipCode,
+            city,
+            email,
+            paymentOption,
+            userId,
+            shippingCost,
+            shippingMethod
+          )
+        );
+        history.push("/order/success");
+        dispatch(deleteCart(userId));
+      } else {
+        dispatch(
+          checkout(
+            fullName,
+            address,
+            zipCode,
+            city,
+            email,
+            paymentOption,
+            userId,
+            shippingCost,
+            shippingMethod
+          )
+        );
+        const res = await axios.post("/api/stripe/test", {
+          total: (cartProducts.cart.total + props.shippingCost) * 100,
+        });
 
-      setClientSecret(res.data.clientSecret);
+        setClientSecret(res.data.clientSecret);
+      }
+    } else {
+      setErrorMessage(
+        "Please make sure that all fields in Shipping Information are filled out!"
+      );
     }
   };
 
@@ -154,13 +194,25 @@ export const OrderSummary = (props) => {
       </Stack>
       <Stack spacing="8">
         <Button
-          colorScheme="blue"
+          colorScheme="red"
           size="lg"
           py="7"
           onClick={() => helperFunction()}
         >
           Place Order
         </Button>
+        {errorMessage && (
+          <Alert status="error">
+            <AlertIcon />
+            <AlertTitle mr={2}>{errorMessage}</AlertTitle>
+            <CloseButton
+              position="absolute"
+              right="8px"
+              top="8px"
+              onClick={() => setErrorMessage("")}
+            />
+          </Alert>
+        )}
         <div className="Stripe">
           {clientSecret && (
             <Elements options={options} stripe={stripePromise}>

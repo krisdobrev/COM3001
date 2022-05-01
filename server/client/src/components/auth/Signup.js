@@ -25,7 +25,7 @@ import * as React from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import { signup } from "../../actions";
+import { passwordValidation, signup } from "../../actions";
 import { PasswordField } from "./PasswordField";
 import { GoogleIcon } from "./ProviderIcons";
 const icon = <GoogleIcon boxSize="5" />;
@@ -39,7 +39,11 @@ const Signup = () => {
   const [password, setPassword] = useState("");
 
   const helperFunction = () => {
-    dispatch(signup({ email, password }));
+    if (password.length >= 8) {
+      dispatch(signup({ email, password }));
+    } else {
+      dispatch(passwordValidation());
+    }
   };
 
   useEffect(() => {

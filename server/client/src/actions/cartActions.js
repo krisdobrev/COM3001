@@ -6,6 +6,7 @@ import {
   DELETE_FROM_CART,
   CART_LOADING,
   UPDATE_CART,
+  CART_ERROR,
 } from "./types";
 
 export const getCart = (id) => (dispatch) => {

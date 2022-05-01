@@ -23,7 +23,11 @@ const orderSchema = new Schema({
   payment: String,
   status: {
     type: String,
-    default: "PAID",
+    default: "PROCESSING",
+  },
+  shipping: {
+    type: String,
+    default: "Standard",
   },
 });
 

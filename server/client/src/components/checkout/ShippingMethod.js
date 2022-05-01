@@ -41,12 +41,12 @@ const ShippingMethod = (props) => {
             spacing="3"
             flex="1"
             onClick={() => {
-              props.setShippingCost(4.99);
+              props.setShippingCost(Number(4.99));
             }}
           >
             <Box
               onClick={() => {
-                props.setShippingCost(4.99);
+                props.setShippingCost(Number(4.99));
               }}
             >
               <HStack color={useColorModeValue("black", "white")}>
@@ -64,12 +64,14 @@ const ShippingMethod = (props) => {
             spacing="3"
             flex="1"
             onClick={() => {
-              props.setShippingCost(14.99);
+              props.setShippingCost(Number(14.99));
+              props.setShippingMethod("Express");
             }}
           >
             <Box
               onClick={() => {
-                props.setShippingCost(14.99);
+                props.setShippingCost(Number(14.99));
+                props.setShippingMethod("Express");
               }}
             >
               <HStack color={useColorModeValue("black", "white")}>

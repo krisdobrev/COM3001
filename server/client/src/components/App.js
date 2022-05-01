@@ -26,6 +26,7 @@ import { EditProduct } from "./admin/AdminEditProduct/EditProduct";
 class App extends Component {
   componentDidMount() {
     this.props.fetchUser();
+    console.log(this.props);
   }
 
   render() {

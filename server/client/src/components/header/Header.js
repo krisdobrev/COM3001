@@ -23,8 +23,14 @@ import { SearchInput } from "./SearchInput";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { signout } from "../../actions/index";
+import { getCart } from "../../actions/cartActions";
 
 class Header extends React.Component {
+  componentDidUpdate(prevProps) {
+    if (this.props.auth.id !== prevProps.auth.id) {
+      this.props.dispatch(getCart(this.props.auth.id));
+    }
+  }
   renderContent() {
     switch (true) {
       case this.props.auth.authenticated === false &&

@@ -20,7 +20,7 @@ import { Link } from "react-router-dom";
 export const ProductCard = (props) => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
-  const { authenticated } = auth;
+  const { authenticated, id } = auth;
 
   const { product, rootProps } = props;
   const { title, image, price } = product;
@@ -67,7 +67,7 @@ export const ProductCard = (props) => {
           colorScheme="red"
           isFullWidth
           onClick={() => {
-            dispatch(addToCart(authenticated._id, product._id, 1)); // need to get user ID
+            dispatch(addToCart(id, product._id, 1)); // need to get user ID
           }}
         >
           Add to cart

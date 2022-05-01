@@ -8,6 +8,7 @@ import {
   IconButton,
   Input,
   Stack,
+  VStack,
   Text,
 } from "@chakra-ui/react";
 import * as React from "react";
@@ -34,10 +35,15 @@ export const Footer = () => (
           md: "8",
         }}
         align="start"
-      >
-        <Logo />
-        <Text color="muted">Create beautiful websites remarkably fast.</Text>
-      </Stack>
+      ></Stack>
+      <VStack>
+        <Text color="muted">
+          Shop opening hours : Mon – Sat : 09:00 – 21:00 Sunday : 12:00 – 18:00
+        </Text>
+        <Text color="muted">
+          Online team working hours Mon-Fri : 09:00 -18:00 Sat-Sun : closed
+        </Text>
+      </VStack>
       <Stack
         direction={{
           base: "column-reverse",
@@ -52,22 +58,23 @@ export const Footer = () => (
         <Stack direction="row" spacing="8">
           <Stack spacing="4" minW="36" flex="1">
             <Text fontSize="sm" fontWeight="semibold" color="subtle">
-              Product
+              Information
             </Text>
             <Stack spacing="3" shouldWrapChildren>
-              <Button variant="link">How it works</Button>
-              <Button variant="link">Pricing</Button>
-              <Button variant="link">Use Cases</Button>
+              <Button variant="link">Delivery</Button>
+              <Button variant="link">Privacy Policy</Button>
+              <Button variant="link">Terms and Condtitions</Button>
+              <Button variant="link">FAQ</Button>
             </Stack>
           </Stack>
           <Stack spacing="4" minW="36" flex="1">
             <Text fontSize="sm" fontWeight="semibold" color="subtle">
-              Legal
+              Others
             </Text>
             <Stack spacing="3" shouldWrapChildren>
-              <Button variant="link">Privacy</Button>
-              <Button variant="link">Terms</Button>
-              <Button variant="link">License</Button>
+              <Button variant="link">New Products</Button>
+              <Button variant="link">Login</Button>
+              <Button variant="link">My Account</Button>
             </Stack>
           </Stack>
         </Stack>
@@ -94,7 +101,7 @@ export const Footer = () => (
       </Stack>
     </Stack>
     <Divider />
-    <Stack
+    {/* <Stack
       pt="8"
       pb="12"
       justify="space-between"
@@ -128,6 +135,6 @@ export const Footer = () => (
           icon={<FaTwitter fontSize="1.25rem" />}
         />
       </ButtonGroup>
-    </Stack>
+    </Stack> */}
   </Container>
 );

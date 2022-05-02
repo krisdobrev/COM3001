@@ -6,7 +6,10 @@ const keys = require("./config/keys");
 const http = require("http"); // new
 const bodyParser = require("body-parser"); // new
 const morgan = require("morgan"); // new
-//const cors = require("cors"); // new
+const cors = require("cors"); // new
+
+const nodemailer = require("nodemailer"); // new 1
+require("dotenv").config(); // new1
 
 require("./models/User");
 require("./models/Product");
@@ -19,7 +22,8 @@ mongoose.connect(keys.mongoURI).catch((err) => console.log(err));
 const app = express();
 
 app.use(morgan("combined")); // new
-//app.use(cors); // new
+app.use(cors()); // new
+app.use(bodyParser.urlencoded({ extended: true })); //new1
 app.use(bodyParser.json({ type: "*/*" })); // new
 app.use(
   cookieSession({
@@ -34,6 +38,7 @@ require("./routes/authentication")(app);
 require("./routes/products")(app);
 require("./routes/cart")(app);
 require("./routes/order")(app);
+require("./routes/email")(app);
 
 if (process.env.NODE_ENV === "production") {
   const root = require("path").join(__dirname, "client", "build");

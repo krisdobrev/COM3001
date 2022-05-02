@@ -8,19 +8,21 @@ import {
   useColorModeValue as mode,
   TableContainer,
   HStack,
+  Button,
 } from "@chakra-ui/react";
 import * as React from "react";
 import { columns } from "./_data";
-import axios from "axios";
 
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import { getOrders } from "../../actions/orderActions";
 
 import CustomModal from "./CustomModal";
 
 export const TableContent = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const userOrders = useSelector((state) => state.order.orders);
   const userId = useSelector((state) => state.auth.id);
@@ -93,6 +95,9 @@ export const TableContent = () => {
                     </TableContainer>
                   ))}
                 />
+                <Button onClick={() => history.push(`/email/${row._id}`)}>
+                  Send feedback
+                </Button>
               </HStack>
             </Td>
           </Tr>

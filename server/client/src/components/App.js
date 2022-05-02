@@ -22,6 +22,7 @@ import AdminTable from "./admin/AdminTable";
 import { AdminProducts } from "./admin/AdminProducts/AdminProducts";
 import { CreateProduct } from "./admin/AdminCreateProduct/CreateProduct";
 import { EditProduct } from "./admin/AdminEditProduct/EditProduct";
+import Email from "./email/Email";
 
 class App extends Component {
   componentDidMount() {
@@ -67,6 +68,7 @@ class App extends Component {
               component={CreateProduct}
             />
             <Route exact path="/admin/product/:id" component={EditProduct} />
+            <Route path="/email/:id" component={Email} />
             <Footer />
           </div>
         </BrowserRouter>
